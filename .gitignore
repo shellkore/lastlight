@@ -1,3 +1,7 @@
 *.tar.gz
 .DS_Store
-dist/downloads/*.apk
+.vercel/
+node_modules/
+.env
+.env.*
+!.env.example
