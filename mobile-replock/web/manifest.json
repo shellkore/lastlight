@@ -1,0 +1,35 @@
+{
+    "name": "RepLock Preview",
+    "short_name": "RepLock Preview",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#d3ff4d",
+    "theme_color": "#d3ff4d",
+    "description": "RepLock UI preview. Device protection and movement verification require Android.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

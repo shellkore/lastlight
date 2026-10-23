@@ -15,7 +15,7 @@ if ($IsWindows) {
 if ($FlutterSdk) { $lastlightFlutter = Join-Path $FlutterSdk 'bin\flutter.bat' }
 elseif (Test-Path -LiteralPath (Join-Path $lastlightRoot '.tools\flutter\bin\flutter.bat')) { $lastlightFlutter = Join-Path $lastlightRoot '.tools\flutter\bin\flutter.bat' }
 else { $lastlightFlutter = (Get-Command flutter -ErrorAction Stop).Source }
-Push-Location (Join-Path $lastlightRoot 'mobile')
+Push-Location (Join-Path $lastlightRoot 'mobile-lastlight')
 try {
     & $lastlightFlutter --no-version-check pub get
     if ($LASTEXITCODE) { throw 'Dependency installation failed.' }
@@ -25,7 +25,7 @@ try {
     if ($LASTEXITCODE) { throw 'Flutter tests failed.' }
     & $lastlightFlutter --no-version-check build apk --release --split-per-abi
     if ($LASTEXITCODE) { throw 'Android build failed.' }
-    $lastlightApk = Join-Path $lastlightRoot 'mobile\build\app\outputs\flutter-apk'
+    $lastlightApk = Join-Path $lastlightRoot 'mobile-lastlight\build\app\outputs\flutter-apk'
     & node (Join-Path $lastlightRoot 'web\scripts\attach-apk.mjs') $lastlightApk
     if ($LASTEXITCODE) { throw 'Could not attach APK to website.' }
 } finally { Pop-Location }

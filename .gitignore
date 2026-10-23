@@ -14,9 +14,11 @@ node_modules/
 key.properties
 .idea/
 .DS_Store
-mobile/build/
-mobile/.dart_tool/
-mobile/android/local.properties
-mobile/android/.gradle/
-mobile/ios/Flutter/Generated.xcconfig
-mobile/ios/Flutter/flutter_export_environment.sh
+**/build/
+**/.dart_tool/
+**/android/local.properties
+**/android/.gradle/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+launch/render/
+launch/*-published.png

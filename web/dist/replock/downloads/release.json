@@ -1,0 +1,31 @@
+{
+  "version": "0.1.0",
+  "build": 1,
+  "minAndroid": "8.0",
+  "channel": "early-access",
+  "signing": "development-key",
+  "builtAt": "2026-10-23T16:19:30.787Z",
+  "variants": [
+    {
+      "abi": "arm64-v8a",
+      "architecture": "ARM64",
+      "filename": "replock-0.1.0-arm64.apk",
+      "bytes": 18919600,
+      "sha256": "dd71f9256daefc77a39fceb1e2dc6791e9598725553c14cd34eff7c8ffec4f29"
+    },
+    {
+      "abi": "armeabi-v7a",
+      "architecture": "ARM32",
+      "filename": "replock-0.1.0-arm32.apk",
+      "bytes": 17752602,
+      "sha256": "c923baaaffd3e90b4b36062376b3d2775c73ea34ab7bb483e3be28bba2e912d4"
+    },
+    {
+      "abi": "x86_64",
+      "architecture": "x86-64",
+      "filename": "replock-0.1.0-x86_64.apk",
+      "bytes": 19453969,
+      "sha256": "084dbbab7b33e6387637a59a1b70fb1c2c0088d4ec276c4e2162587099fcddd7"
+    }
+  ]
+}

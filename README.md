@@ -1,61 +1,68 @@
-# Lastlight
+# RepLock + Lastlight
 
-Lastlight is a Flutter app for a quieter bedtime, paired with a static website and interactive browser demonstration.
+Two Flutter apps, two landing pages. **RepLock** turns movement into intentional screen time. **Lastlight** keeps the original bedtime story experience.
 
-## Layout
+Published: [RepLock landing page](https://lastlight-concept.shivampathakcse23.chatgpt.site/replock/) · [YouTube launch film](https://youtu.be/nxaQSihabgg) · [Android ARM64 download](https://lastlight-concept.shivampathakcse23.chatgpt.site/replock/downloads/replock-0.1.0-arm64.apk).
 
-- `mobile/`: Flutter UI, seven story chapters, native Android accessibility protection, and generated iOS project.
-- `web/dist/`: published landing page, interactive simulation, privacy notice, and downloadable APK.
-- `web/scripts/attach-apk.mjs`: copies a built APK into the website and generates size/SHA-256 release metadata.
-- `scripts/build-android.ps1`: repeatable analysis, tests, Android build, and APK publishing preparation.
-- `.tools/`: workspace-local Flutter SDK, not application source.
-- `vercel.json`: deploys `web/dist/` from the repository root.
+## Project layout
 
-The local `sites/` folder is an archived concept checkout and is excluded from this repository. The current website source is `web/`.
+- `mobile-replock/` — the new RepLock Flutter app and native Android implementation.
+- `mobile-lastlight/` — the previous Lastlight mobile folder, preserved with its original code and tests. Its original project guide is `mobile-lastlight/PROJECT.md`.
+- `web/dist/index.html` — the original Lastlight landing page.
+- `web/dist/replock/` — RepLock landing page, interactive walkthrough, privacy notice, APK downloads, Flutter UI preview, and launch film.
+- `launch/` — reproducible launch-video renderer and actual Flutter screen captures with illustrative data.
+- `scripts/build-replock.ps1` — RepLock analysis, tests, APK builds, and website assets.
+- `scripts/build-android.ps1` — the existing Lastlight build script, updated to `mobile-lastlight`.
 
-## Deploy on Vercel
+## RepLock's Android loop
 
-Import [shellkore/lastlight](https://github.com/shellkore/lastlight), select the **Other** framework preset, and keep **Root Directory** as `.`. The root `vercel.json` runs `node web/scripts/verify-release.mjs` and serves `web/dist/`. No environment variables, dependencies, or Flutter build are required for the website. All three Android APKs are committed with their release metadata.
+1. Choose installed apps. Read the Accessibility disclosure and enable the service in Android Settings. Return to RepLock and enable App protection.
+2. Complete 10 squats for 20 coins, 15 jumping jacks for 30, or 20 alternating knee raises for 20. CameraX supplies frames to bundled ML Kit pose detection. Stable, high-confidence movement cycles count; a held pose does not.
+3. Alternatively, opt into step tracking. Every 500 tracked steps earns 5 coins. Claim them in the app.
+4. Spend 10/20/30 coins for a 5/10/15-minute pass to one selected app. Pass time starts immediately and continues outside that app. The shield returns at expiry.
 
-If the project already has manually overridden build settings from the earlier web-only repository, update the build command to `node web/scripts/verify-release.mjs` and output directory to `web/dist`, or clear those overrides to use the configuration file. Selecting `web` as Root Directory is also supported by its own `vercel.json`.
+The native Android layer owns the wallet, verification, and unlock timer. Flutter cannot directly mint coins. Native persistence stores the latest 100 transactions. Workout rewards are capped at 200/day with 45 seconds between completions; step rewards are capped at 100/day. Passes use elapsed device time and fail closed after reboot. Everything is local; coins have no monetary value.
 
-## Android behavior
+## Build and check
 
-The user explicitly enables Lastlight Accessibility after an in-app disclosure. Only window-state events and app identifiers are observed; window content retrieval is disabled. Selected apps are covered with an accessibility overlay during an active quiet session. The user can leave for Home or return to Lastlight to intentionally end the session.
-
-Manual sessions last until the chosen morning boundary. Automatic sessions begin after the configured allowance is observed inside the evening window. Five verified quiet minutes light a checkpoint; fifteen earn a chapter, but blocking continues until morning. There is at most one earned chapter per night. Bypassing clears that night's unclaimed reward and suppresses automatic retriggering that night. Previously claimed chapters remain.
-
-App selection, settings, counters, and stories persist locally. There are no accounts, ads, analytics SDKs, or release-app network requests. Android app-data backup is disabled.
-
-This is an early-access voluntary blocker. Disabling Accessibility, uninstalling, battery restrictions, service interruption, and device-clock changes can affect protection. It is not an unbreakable parental control and does not measure sleep. Physical-device verification is still required before treating it as production-ready.
-
-## Build
-
-Use Flutter stable (this build uses 3.47.7 / Dart 3.13.5), JDK 21, and the Android SDK. Install dependencies with `flutter pub get` in `mobile/`.
+Flutter stable, JDK 21, and the Android SDK are required. The workspace SDK is `.tools/flutter` when available.
 
 ```powershell
-cd mobile
+./scripts/build-replock.ps1 -JavaHome 'C:/Program Files/Java/jdk-21' -AndroidSdk 'C:/Users/shellkore/AppData/Local/Android/Sdk'
+```
+
+Or from `mobile-replock/`:
+
+```sh
+flutter pub get
 flutter analyze
 flutter test
 flutter build apk --release --split-per-abi
-cd ..
-node web/scripts/attach-apk.mjs (Resolve-Path mobile/build/app/outputs/flutter-apk)
+cd android
+./gradlew testDebugUnitTest
 ```
 
-The generated release configuration currently signs with the Android debug key for early sideload testing. Configure and retain a private release keystore before a store release or wider distribution. Never put a signing key or password in the website.
-
-Run native schedule tests from `mobile/android` using `./gradlew testDebugUnitTest` with a suitable JDK and SDK configured.
-
-## iOS
-
-`mobile/ios/Runner.xcworkspace` and the iOS Flutter target are generated. The iOS bridge provides a clearly marked preview; Screen Time authorization, Family Controls/Managed Settings extensions, and enforcement are not implemented. The website says **Coming soon** and has no pretend App Store link.
-
-Compiling or signing an iOS binary requires macOS, Xcode, and the appropriate Apple signing setup. On a Mac, run `flutter pub get`, then `flutter build ios --no-codesign` to verify compilation. No IPA is produced on Windows.
+APK outputs are in `mobile-replock/build/app/outputs/flutter-apk/`. `web/scripts/attach-replock.mjs` copies all three architectures into the website with SHA-256 metadata. Compressed native libraries keep each APK below the Sites 25 MiB asset limit.
 
 ## Website
 
-```powershell
-python -m http.server 4174 --directory web/dist
+`web/` is shared by both apps. Each landing page's footer links to the other app.
+
+Serve `web/dist/` with a static server. Lastlight is `/`; RepLock is `/replock/`; the Flutter preview is `/replock/preview/`. The browser cannot block apps or verify camera challenges, and is labeled accordingly.
+
+```sh
+python -m http.server 4175 --directory web/dist
+node web/scripts/verify-all.mjs
 ```
 
-The browser demonstration simulates progress and does not control other apps. The actual APK and generated release metadata live in `web/dist/downloads/`. The original Sites project identity is retained in `web/.openai/hosting.json`; Vercel uses `vercel.json`. This GitHub branch includes APK binaries that exceed the Sites source server's Git object limit; use a separate source-only checkout if publishing to the original Sites host.
+Vercel can deploy from repository root (`vercel.json`) or `web` (`web/vercel.json`). The verification step checks both apps' binaries, RepLock's local asset links, and the attached YouTube URL. The existing public Sites project is also retained. Sites publication uses an isolated source checkout under ignored `sites/`; binaries are included in the deployment archive, not pushed as Git source objects.
+
+## Release boundaries
+
+This is an **Android early-access** implementation, not an app-store release. APKs use development signing. Real-device validation of camera accuracy, accessibility behavior, and vendor battery restrictions is still required; no Android device was connected during this build. A private release keystore and store permission review are required before store distribution.
+
+The generated iOS target and browser build show a clearly labeled UI preview. iOS native enforcement, camera/step integration, Family Controls entitlements, Device Activity extensions, and a signed Mac/Xcode build remain unfinished. There is no pretend iOS download.
+
+Protection is voluntary: users can pause it, disable Accessibility, or uninstall. Pose detection can miss reps and is not identity or medical verification. Step tracking starts after opt-in and may stop under system restrictions. Daily caps use local dates and are not a financial anti-fraud mechanism.
+
+Technical references: [ML Kit pose detection](https://developers.google.com/ml-kit/vision/pose-detection/android), [Android accessibility services](https://developer.android.com/guide/topics/ui/accessibility/service), [Apple Family Controls](https://developer.apple.com/documentation/familycontrols).

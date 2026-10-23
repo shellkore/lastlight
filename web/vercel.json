@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "node scripts/verify-release.mjs",
+  "buildCommand": "node scripts/verify-all.mjs",
   "outputDirectory": "dist"
 }

@@ -1,6 +1,6 @@
 # Lastlight mobile
 
-Flutter mobile source for Android and iOS. See the root README for behavior, platform limitations, and release steps.
+Flutter mobile source for Android and iOS. See PROJECT.md in this folder for behavior, platform limitations, and release steps.
 
 Screens: Tonight, Your story, Boundaries. The Android platform channel owns persisted settings and session state. The accessibility service owns foreground-app observation, quiet-time verification, overnight overlays, and scheduled enforcement, so the Flutter screen does not need to stay open.
 
