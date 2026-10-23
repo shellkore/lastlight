@@ -5,10 +5,10 @@ Buildless landing page and interactive demonstration. Serve `dist/` directly. Th
 ## Refresh the download
 
 ```sh
-node scripts/attach-apk.mjs /absolute/path/to/app-release.apk
+node scripts/attach-apk.mjs /absolute/path/to/flutter-apk
 ```
 
-This copies the actual APK into `dist/downloads/lastlight-0.1.0.apk` and writes `release.json` with its version, size, build date, and SHA-256 checksum. Keep the APK and metadata together.
+This copies three architecture-specific APKs into `dist/downloads/`: ARM64 (the default for most current phones), ARM32, and x86-64. It writes `release.json` with each package's size and SHA-256 checksum, plus the version and build date. Keep the packages and metadata together. Each APK must fit the hosting limit of 25 MiB per file.
 
 The APK is a deployment asset, excluded from Git to respect the source repository's object-size limit. Its release metadata and checksum verifier are tracked. Run `node scripts/verify-release.mjs` before packaging; the static deployment archive includes the actual APK. Re-run the mobile build and attachment script if the deployment asset is missing after a fresh checkout.
 

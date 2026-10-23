@@ -1,10 +1,35 @@
 {
   "version": "0.1.0",
   "build": 1,
-  "filename": "lastlight-0.1.0.apk",
-  "bytes": 50880190,
-  "sha256": "c401765eac2a927ad5f3cfc06bd4e8161c8f3dd9ffec0c55f65e974b1dfb7a7c",
+  "abi": "arm64-v8a",
+  "architecture": "ARM64",
+  "filename": "lastlight-0.1.0-arm64.apk",
+  "bytes": 17400732,
+  "sha256": "fd0292bd493b4edb00ad2fbef77a6f264172afe26cc3a653dd4f8d7c68720f2e",
+  "variants": [
+    {
+      "abi": "arm64-v8a",
+      "architecture": "ARM64",
+      "filename": "lastlight-0.1.0-arm64.apk",
+      "bytes": 17400732,
+      "sha256": "fd0292bd493b4edb00ad2fbef77a6f264172afe26cc3a653dd4f8d7c68720f2e"
+    },
+    {
+      "abi": "armeabi-v7a",
+      "architecture": "ARM32",
+      "filename": "lastlight-0.1.0-arm32.apk",
+      "bytes": 14793064,
+      "sha256": "56e5d5f4b3eecd767191f9b52df0e4dd57f9b777464b7f1d6e0695cffedb04d2"
+    },
+    {
+      "abi": "x86_64",
+      "architecture": "x86-64",
+      "filename": "lastlight-0.1.0-x86_64.apk",
+      "bytes": 18900898,
+      "sha256": "325af4430ee6480ae882f4de01b79c2b06adc63eea5429c96abff5fb8b485c08"
+    }
+  ],
   "minAndroid": "8.0",
   "channel": "early-access",
-  "builtAt": "2026-10-23T02:35:56.698Z"
+  "builtAt": "2026-10-23T02:44:19.958Z"
 }
