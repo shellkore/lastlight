@@ -1,0 +1,10 @@
+{
+  "version": "0.1.0",
+  "build": 1,
+  "filename": "lastlight-0.1.0.apk",
+  "bytes": 50880190,
+  "sha256": "c401765eac2a927ad5f3cfc06bd4e8161c8f3dd9ffec0c55f65e974b1dfb7a7c",
+  "minAndroid": "8.0",
+  "channel": "early-access",
+  "builtAt": "2026-10-23T02:35:56.698Z"
+}

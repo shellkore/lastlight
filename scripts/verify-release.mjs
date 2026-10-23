@@ -1,0 +1,11 @@
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const release=JSON.parse(readFileSync(path.join(root,'dist/downloads/release.json'),'utf8'));
+if(path.basename(release.filename)!==release.filename)throw new Error('Invalid release filename.');
+const bytes=readFileSync(path.join(root,'dist/downloads',release.filename));
+const hash=createHash('sha256').update(bytes).digest('hex');
+if(bytes.length!==release.bytes||hash!==release.sha256)throw new Error('The APK does not match the committed release metadata. Rebuild and reattach it.');
+console.log(`Verified Android ${release.version}: ${bytes.length} bytes; SHA-256 matches.`);
